@@ -3,28 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityMaskCreator", "UnityMaskConverter\UnityMaskCreator.csproj", "{877E2FCC-129A-4D11-A47C-1F80B20EADA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityMaskCreator", "UnityMaskCreator\UnityMaskCreator.csproj", "{877E2FCC-129A-4D11-A47C-1F80B20EADA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Debug|x86.Build.0 = Debug|Any CPU
 		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{877E2FCC-129A-4D11-A47C-1F80B20EADA2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D8E4C26D-B219-48CE-BABD-876DA40AF5D2}
+		SolutionGuid = {E2FB356D-DF1C-4414-9835-5F601B016252}
 	EndGlobalSection
 EndGlobal
