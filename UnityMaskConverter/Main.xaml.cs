@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static UnityMaskCreator.Channels.Channels;
@@ -32,11 +30,7 @@ namespace UnityMaskCreator
                 {
                     tb.Text = ofd.FileName;
 
-                    MaskInput mi = new MaskInput
-                    {
-                        path = ofd.FileName,
-                        channel = channel
-                    };
+                    MaskInput mi = new MaskInput{path = ofd.FileName, channel = channel};
 
                     if (images.Count > 0)
                     {
@@ -53,16 +47,9 @@ namespace UnityMaskCreator
 
                     SetImage(ofd.FileName, img);
                 }
-                else if(images.Count > 0)
+                else
                 {
-                    for (int i = 0; i < images.Count; i++) {
-                        if (images[i].channel != channel) return;
-
-                        _ = images.Remove(images[i]);
-                        img.Source = null;
-                        tb.Text = "";
-                        break;
-                    }
+                    ClearInput(tb, img, channel);
                 }
             }
         }
@@ -140,74 +127,35 @@ namespace UnityMaskCreator
                 if (_pixelsFinal[i] == 0) _pixelsFinal[i] = newPixels[i];
             }
 
-            // Create Channel as Bitmap, and then save it.
+            // Create mask as Bitmap
             BitmapSource bitmap = BitmapSource.Create(crtBmp.PixelWidth, crtBmp.PixelHeight, 96, 96, pf, null, _pixelsFinal, stride);
-
             PngBitmapEncoder encoder = new PngBitmapEncoder();
+
             encoder.Frames.Add(BitmapFrame.Create(bitmap));
             string path = $"./output/{DateTime.Now:HH_mm_ss-MM_dd_yyyy}.png";
 
-            // while (!IsFileReady(path)) { } / used before to ensure no-one is using the file, since I created an image before for each channel added
+            // Save the file and make sure there's a proper folder.
+            if (!Directory.Exists("./output/")) Directory.CreateDirectory("./output/");
+
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
                 encoder.Save(fs);
-            }
+
             return bitmap;
         }
-        private void ClearInput(TextBlock tb, Image img, Channel channel)
+        private static void ClearInput(TextBlock tb, Image img, Channel channel)
         {
             if (images.Count > 0 && active)
             {
                 for (int i = 0; i < images.Count; i++)
                 {
-                    if (images[i].channel == channel)
-                    {
-                        _ = images.Remove(images[i]);
-                        img.Source = null;
-                        tb.Text = "";
-                        break;
-                    }
+                    if (images[i].channel != channel) continue;
+
+                    _ = images.Remove(images[i]);
+                    img.Source = null;
+                    tb.Text = "";
+                    return;
                 }
             }
-        }
-
-        public static bool IsFileReady(string path)
-        {
-            try
-            {
-                if (!File.Exists(path)) return true;
-
-                using (FileStream stream = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.None))
-                    return stream.Length > 0;
-
-            } catch (Exception) { return false; }
-        }
-
-
-
-        /* Final Trigger - Create the mask texture */
-        private async void _createMask_Click(object sender, RoutedEventArgs e)
-        {
-            if (images.Count < 1)
-            {
-                _ = MessageBox.Show("Please select at least one image", System.Windows.Forms.Application.ProductName);
-                return;
-            }
-
-            CreateMask.IsEnabled = active = !CreateMask.IsEnabled;
-            await Task.Run(() =>
-            {
-                for (int i = 0; i < images.Count; i++) { _ = CreateMaskImg(images[i], i); }
-                GC.Collect();
-            });
-            CreateMask.IsEnabled = active = !CreateMask.IsEnabled;
-
-            // Open the folder where it got saved to spare some search time.
-            _ = Process.Start("explorer.exe", $@"{Directory.GetCurrentDirectory()}\output\");
-
-            // Finally clear data for the next mask to create.
-            Array.Clear(_pixelsFinal, 0, _pixelsFinal.Length);
-            Array.Clear(_colorData, 0, _colorData.Length);
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using static UnityMaskCreator.Channels.Channels;
 
@@ -28,6 +32,34 @@ namespace UnityMaskCreator
         private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             new Settings().Show();
+        }
+
+
+
+
+        /* Final Trigger - Create the mask texture */
+        private async void _createMask_Click(object sender, RoutedEventArgs e)
+        {
+            if (images.Count < 1)
+            {
+                _ = MessageBox.Show("Please select at least one image", System.Windows.Forms.Application.ProductName);
+                return;
+            }
+
+            CreateMask.IsEnabled = active = !CreateMask.IsEnabled;
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < images.Count; i++) { _ = CreateMaskImg(images[i], i); }
+                GC.Collect();
+            });
+            CreateMask.IsEnabled = active = !CreateMask.IsEnabled;
+
+            // Open the folder where it got saved to spare some search time.
+            _ = Process.Start("explorer.exe", $@"{Directory.GetCurrentDirectory()}\output\");
+
+            // Finally clear data for the next mask to create.
+            Array.Clear(_pixelsFinal, 0, _pixelsFinal.Length);
+            Array.Clear(_colorData, 0, _colorData.Length);
         }
     }
 }
