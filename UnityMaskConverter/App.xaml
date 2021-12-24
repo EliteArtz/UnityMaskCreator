@@ -1,0 +1,95 @@
+﻿<Application x:Class="UnityMaskCreator.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             
+             xmlns:local="clr-namespace:UnityMaskCreator"
+             xmlns:channels="clr-namespace:UnityMaskCreator.Channels"
+             
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="Main.xaml">
+    <Application.Resources>
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="#19FFFFFF" />
+            <Style.Resources>
+                <Style TargetType="MenuItem">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="itemBlock">
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="itemBox" >
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Segoe UI Symbol"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="Border" x:Key="itemBorder">
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="Background" Value="#54191919" />
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.25"></DropShadowEffect>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Border" x:Key="gridSetting">
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="Background" Value="#19000000"/>
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="AllowDrop" Value="True" />
+        </Style>
+        <Style TargetType="Label" x:Key="itemLabel">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="8px 5px" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#54191919" />
+        </Style>
+
+        <ObjectDataProvider x:Key="Channels" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="channels:Channels+Channel" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0,0" x:Key="WindowBackground">
+            <GradientStop Color="#FF1D5393" Offset="0"/>
+            <GradientStop Color="#FF6B59BB" Offset="0.996"/>
+        </LinearGradientBrush>
+    </Application.Resources>
+</Application>
