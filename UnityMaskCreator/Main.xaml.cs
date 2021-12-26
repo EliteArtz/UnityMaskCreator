@@ -38,7 +38,7 @@ namespace UnityMaskCreator
                 MaskInput mi = new MaskInput { path = ofd.FileName, channel = channel };
                 tb.Text = ofd.FileName;
 
-                if (images.Count > 0)
+                if (images.Count > 0 && images.FindIndex(image => image.channel == channel)  != -1)
                     images.Remove(images[images.FindIndex(image => image.channel == channel)]);
 
                 images.Add(mi);
@@ -125,12 +125,13 @@ namespace UnityMaskCreator
 
             string path = $"./output/{DateTime.Now:HH_mm_ss-MM_dd_yyyy}.png";
 
-            return SaveMask(bitmap, path);
+            return SaveMaskImg(bitmap, path);
         }
 
         private static void ClearInput(TextBlock tb, Image img, Channel channel)
         {
             if (images.Count == 0 && !active) return;
+            if (images.FindIndex(image => image.channel == channel) == -1) return;
 
             images.Remove(images[images.FindIndex(image => image.channel == channel)]);
             img.Source = null;
@@ -138,25 +139,24 @@ namespace UnityMaskCreator
             return;
         }
 
-        private void DisposeData()
-        {
-            Array.Clear(_pixelsFinal, 0, _pixelsFinal.Length);
-            Array.Clear(_colorData, 0, _colorData.Length);
-        }
-
-        private static BitmapSource SaveMask(BitmapSource bitmapMask, string path = "./")
+        private static BitmapSource SaveMaskImg(BitmapSource bitmapMask, string destinationPath = "./")
         {
             PngBitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bitmapMask));
 
-            // Save the file and make sure there's a proper folder.
             if (!Directory.Exists("./output/"))
                 Directory.CreateDirectory("./output/");
 
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(destinationPath, FileMode.OpenOrCreate))
                 encoder.Save(fs);
 
             return bitmapMask;
+        }
+
+        private void DisposeData()
+        {
+            Array.Clear(_pixelsFinal, 0, _pixelsFinal.Length);
+            Array.Clear(_colorData, 0, _colorData.Length);
         }
     }
 }
