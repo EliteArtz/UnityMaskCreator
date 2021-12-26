@@ -36,7 +36,7 @@
                     </Border>
                     <StackPanel Orientation="Horizontal">
                         <Border Margin="0, 5, 5, 5" Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <ComboBox Name="_metallicChannel"  BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.R}"/>
+                            <ComboBox Name="_metallicChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.R}"/>
                         </Border>
                         <Border Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
                             <Button Name="_clearMetallic" Click="_clearMetallic_Click">Clear</Button>

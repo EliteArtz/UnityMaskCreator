@@ -19,38 +19,31 @@ namespace UnityMaskCreator
         private static byte[] _pixelsFinal;
         private static byte[] _colorData;
 
-        private static void FileDialog(TextBlock tb, Image img, Channel channel)
+        private static void FileDialog(object sender, Image img, Channel channel)
         {
+            TextBlock tb = (TextBlock)sender;
             if (!active) return;
 
-            using (OpenFileDialog ofd = new OpenFileDialog() { Filter="Image (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp"})
+            using (OpenFileDialog ofd = new OpenFileDialog() { Filter = "Image (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp" })
             {
                 DialogResult res = ofd.ShowDialog();
-                if (res == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(ofd.FileName))
-                {
-                    tb.Text = ofd.FileName;
 
-                    MaskInput mi = new MaskInput{path = ofd.FileName, channel = channel};
-
-                    if (images.Count > 0)
-                    {
-                        for (int i = 0; i < images.Count; i++)
-                        {
-                            if (images[i].channel == channel)
-                            {
-                                _ = images.Remove(images[i]);
-                                break; 
-                            }
-                        }
-                    }
-                    images.Add(mi);
-
-                    SetImage(ofd.FileName, img);
-                }
-                else
+                if (res != System.Windows.Forms.DialogResult.OK && string.IsNullOrWhiteSpace(ofd.FileName))
                 {
                     ClearInput(tb, img, channel);
+                    return;
                 }
+
+
+                MaskInput mi = new MaskInput { path = ofd.FileName, channel = channel };
+                tb.Text = ofd.FileName;
+
+                if (images.Count > 0)
+                    images.Remove(images[images.FindIndex(image => image.channel == channel)]);
+
+                images.Add(mi);
+
+                SetImage(ofd.FileName, img);
             }
         }
         private static void SetImage(string path, Image img)
@@ -117,7 +110,7 @@ namespace UnityMaskCreator
                 }
             });
 
-            if (images.Count != (imgIndex + 1)) return null; //check if this is the last channel to calculate
+            if (images.Count != (imgIndex + 1)) return null; //check if this is(n't) the last channel to calculate
 
 
             crtBmp.WritePixels(new Int32Rect(0, 0, crtBmp.PixelWidth, crtBmp.PixelHeight), _colorData, stride, 0);
@@ -129,33 +122,41 @@ namespace UnityMaskCreator
 
             // Create mask as Bitmap
             BitmapSource bitmap = BitmapSource.Create(crtBmp.PixelWidth, crtBmp.PixelHeight, 96, 96, pf, null, _pixelsFinal, stride);
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
 
-            encoder.Frames.Add(BitmapFrame.Create(bitmap));
             string path = $"./output/{DateTime.Now:HH_mm_ss-MM_dd_yyyy}.png";
 
+            return SaveMask(bitmap, path);
+        }
+
+        private static void ClearInput(TextBlock tb, Image img, Channel channel)
+        {
+            if (images.Count == 0 && !active) return;
+
+            images.Remove(images[images.FindIndex(image => image.channel == channel)]);
+            img.Source = null;
+            tb.Text = string.Empty;
+            return;
+        }
+
+        private void DisposeData()
+        {
+            Array.Clear(_pixelsFinal, 0, _pixelsFinal.Length);
+            Array.Clear(_colorData, 0, _colorData.Length);
+        }
+
+        private static BitmapSource SaveMask(BitmapSource bitmapMask, string path = "./")
+        {
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmapMask));
+
             // Save the file and make sure there's a proper folder.
-            if (!Directory.Exists("./output/")) Directory.CreateDirectory("./output/");
+            if (!Directory.Exists("./output/"))
+                Directory.CreateDirectory("./output/");
 
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
                 encoder.Save(fs);
 
-            return bitmap;
-        }
-        private static void ClearInput(TextBlock tb, Image img, Channel channel)
-        {
-            if (images.Count > 0 && active)
-            {
-                for (int i = 0; i < images.Count; i++)
-                {
-                    if (images[i].channel != channel) continue;
-
-                    _ = images.Remove(images[i]);
-                    img.Source = null;
-                    tb.Text = "";
-                    return;
-                }
-            }
+            return bitmapMask;
         }
     }
 }
