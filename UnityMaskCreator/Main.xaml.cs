@@ -8,7 +8,6 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static UnityMaskCreator.Channels.Channels;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace UnityMaskCreator
 {
@@ -18,6 +17,8 @@ namespace UnityMaskCreator
         public static List<MaskInput> images = new List<MaskInput>();
         private static byte[] _pixelsFinal;
         private static byte[] _colorData;
+
+        
 
         private static void FileDialog(object sender, Image img, Channel channel)
         {
@@ -38,7 +39,7 @@ namespace UnityMaskCreator
                 MaskInput mi = new MaskInput { path = ofd.FileName, channel = channel };
                 tb.Text = ofd.FileName;
 
-                if (images.Count > 0 && images.FindIndex(image => image.channel == channel)  != -1)
+                if (images.Count > 0 && images.FindIndex(image => image.channel == channel) != -1)
                     images.Remove(images[images.FindIndex(image => image.channel == channel)]);
 
                 images.Add(mi);
@@ -77,7 +78,7 @@ namespace UnityMaskCreator
             // Check if the final color data or final pixels is empty, we will fill it with data to start if true.
             if (_pixelsFinal == null)
                 _pixelsFinal = new byte[size];
-            if(_colorData == null)
+            if (_colorData == null)
                 _colorData = new byte[size * 4];
 
             byte[] newPixels = new byte[size];
@@ -86,7 +87,7 @@ namespace UnityMaskCreator
             // Accessing bitmap in multiple threads returns an exception, here I am saving important data for acessing.
             int width = crtBmp.PixelWidth,
                 height = crtBmp.PixelHeight;
-            Parallel.For(0, width, x =>
+            for(int x = 0; x < width;x++)
             {
                 for (int y = 0; y < height; y++)
                 {
@@ -108,7 +109,7 @@ namespace UnityMaskCreator
                             break;
                     }
                 }
-            });
+            };
 
             if (images.Count != (imgIndex + 1)) return null; //check if this is(n't) the last channel to calculate
 
@@ -127,6 +128,8 @@ namespace UnityMaskCreator
 
             return SaveMaskImg(bitmap, path);
         }
+
+
 
         private static void ClearInput(TextBlock tb, Image img, Channel channel)
         {

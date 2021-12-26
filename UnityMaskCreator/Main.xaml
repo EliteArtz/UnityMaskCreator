@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:UnityMaskCreator"
         xmlns:channels="clr-namespace:UnityMaskCreator.Channels"
         mc:Ignorable="d"
-        Title="UnityMaskCreator" Height="554.547" Width="1075.979" WindowStartupLocation="CenterScreen" MinHeight="640">
+        Title="UnityMaskCreator" Height="554.547" Width="1075.979" WindowStartupLocation="CenterScreen" MinHeight="640"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Background>
         <StaticResource ResourceKey="WindowBackground" />
     </Window.Background>
@@ -36,7 +37,10 @@
                     </Border>
                     <StackPanel Orientation="Horizontal">
                         <Border Margin="0, 5, 5, 5" Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <ComboBox Name="_metallicChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.R}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">Channel</Label>
+                                    <ComboBox HorizontalAlignment="Left" Name="_metallicChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.R}"></ComboBox>
+                                </StackPanel>
                         </Border>
                         <Border Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
                             <Button Name="_clearMetallic" Click="_clearMetallic_Click">Clear</Button>
@@ -56,12 +60,15 @@
                     <Label Style="{StaticResource itemLabel}">Ambient Occlusion</Label>
 
                     <Border Style="{StaticResource itemBorder}">
-                        <TextBlock Name="_aoTextBox" MouseLeftButtonDown="_aoTextBox_MouseLeftButtonDown" Style="{StaticResource itemBlock}" />
+                        <TextBlock Name="_aoTextBox" MouseLeftButtonDown="_aoTextBox_MouseLeftButtonDown" Style="{StaticResource itemBlock}" Cursor="Hand" />
                     </Border>
 
                     <StackPanel Orientation="Horizontal">
                         <Border Margin="0, 5, 5, 5" Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <ComboBox Name="_aoChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.G}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">Channel</Label>
+                                <ComboBox Name="_aoChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.G}"/>
+                            </StackPanel>
                         </Border>
                         <Border Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
                             <Button Name="_clearAO" Click="_clearAO_Click">Clear</Button>
@@ -85,7 +92,10 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Border Margin="0, 5, 5, 5" Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <ComboBox Name="_heightChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.B}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">Channel</Label>
+                                <ComboBox Name="_heightChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.B}"/>
+                            </StackPanel>
                         </Border>
                         <Border Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
                             <Button Name="_clearHeight" Click="_clearHeight_Click">Clear</Button>
@@ -109,10 +119,13 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Border Margin="0, 5, 5, 5" Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <ComboBox Name="_snChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.A}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center">Channel</Label>
+                                <ComboBox Name="_snChannel" BorderThickness="0" ItemsSource="{Binding Source={StaticResource Channels}}" SelectedValue="{x:Static channels:Channels+Channel.A}"/>
+                            </StackPanel>
                         </Border>
                         <Border Style="{StaticResource itemBorder}" HorizontalAlignment="Left">
-                            <Button Name="_clearSN" Click="_clearSN_Click">Clear</Button>
+                            <Button Name="_clearSN" Click="_clearSN_Click" Cursor="Hand">Clear</Button>
                         </Border>
                     </StackPanel>
                 </StackPanel>

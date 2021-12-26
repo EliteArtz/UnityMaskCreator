@@ -76,6 +76,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System">
       <Private>True</Private>
     </Reference>

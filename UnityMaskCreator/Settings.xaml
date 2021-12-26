@@ -9,23 +9,23 @@
     <Window.Background>
         <StaticResource ResourceKey="WindowBackground" />
     </Window.Background>
-    <DockPanel>
-        <Grid Margin="15">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Border Style="{StaticResource gridSetting}" Grid.Column="0">
-                <StackPanel VerticalAlignment="Center">
-                    <Label HorizontalAlignment="Center" Style="{StaticResource itemLabel}">W.I.P. Section</Label>
+    <DockPanel Margin="15">
+        <Border DockPanel.Dock="Top" Style="{StaticResource gridSetting}" VerticalAlignment="Top">
+            <StackPanel>
+                <Label Style="{StaticResource itemLabel}">Set Mask filename by</Label>
+
+                <RadioButton IsChecked="True" GroupName="fileMode">Date</RadioButton>
+                <RadioButton GroupName="fileMode">Random</RadioButton>
+                <RadioButton GroupName="fileMode">User input</RadioButton>
+
+                <StackPanel Visibility="Collapsed" Margin="0,15,0,0">
+                    <Label Style="{StaticResource itemLabel}">File Name</Label>
 
                     <Border Style="{StaticResource itemBorder}">
-                        <TextBox Style="{StaticResource itemBox}" IsEnabled="False"></TextBox>
+                        <TextBox Style="{StaticResource itemBox}" />
                     </Border>
                 </StackPanel>
-            </Border>
-        </Grid>
+            </StackPanel>
+        </Border>
     </DockPanel>
 </Window>
