@@ -38,10 +38,10 @@
                 </Grid.ColumnDefinitions>
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
                     <Border x:Name="shadow" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                        <Border x:Name="dropDownBorder" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1">
+                        <Border x:Name="dropDownBorder" Background="#292939" CornerRadius="5" Padding="0,5">
                             <ScrollViewer x:Name="DropDownScrollViewer">
-                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
-                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                <Grid x:Name="grid">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" VerticalAlignment="Top">
                                         <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
                                     </Canvas>
                                     <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -76,7 +76,7 @@
         <Style TargetType="ComboBoxItem">
             <Setter Property="BorderThickness" Value="0" />
             
-            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="Cursor" Value="Hand" />
         </Style>
         <Style TargetType="{x:Type ComboBox}">
