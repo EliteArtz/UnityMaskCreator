@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="UnityMaskCreator.MessageBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnityMaskCreator"
+             mc:Ignorable="d" MinWidth="200" MinHeight="160" MaxWidth="1000">
+    <UserControl.Background>
+        <StaticResource ResourceKey="WindowBackground" />
+    </UserControl.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Border Margin="20,10">
+            <TextBlock Name="Message" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" TextWrapping="Wrap">Preview</TextBlock>
+        </Border>
+        <Border Padding="10,0" Grid.Row="1" Background="#22ffffff">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border  Style="{StaticResource itemBorder}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Padding="15,5" Name="Cancel_Btn" Click="Cancel_Btn_Click" Visibility="Collapsed">Cancel</Button>
+                </Border>
+                <Border Style="{StaticResource itemBorder}" Margin="5,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Padding="15,5" Name="Ok_Btn" Click="Ok_Btn_Click" Cursor="Hand">Ok</Button>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

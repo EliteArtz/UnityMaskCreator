@@ -17,7 +17,6 @@ namespace UnityMaskCreator
         public Main()
         {
             InitializeComponent();
-
             ChannelComboBoxes().ForEach(ChannelComboBox => ChannelComboBox.SelectionChanged += Channel_SelectionChanged);
         }
 
@@ -86,7 +85,7 @@ namespace UnityMaskCreator
         {
             if (images.Count < 1)
             {
-                _ = MessageBox.Show("Please select at least one image", System.Windows.Forms.Application.ProductName);
+                MessageBoxExt.Show("Please select at least one image.", Title);
                 return;
             }
 
@@ -94,7 +93,7 @@ namespace UnityMaskCreator
             await Task.Run(() =>
             {
                 for (int i = 0; i < images.Count; i++) 
-                    _ = CreateMaskImg(images[i], i);
+                    CreateMaskImg(images[i], i);
                 GC.Collect();
             });
             CreateMask.IsEnabled = active = !CreateMask.IsEnabled;

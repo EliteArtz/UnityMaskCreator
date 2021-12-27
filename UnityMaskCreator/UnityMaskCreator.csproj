@@ -124,6 +124,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Main\Events.cs" />
+    <Compile Include="UserControls\MessageBox.xaml.cs">
+      <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <DependentUpon>Main.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserControls\MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,7 +4,6 @@ namespace UnityMaskCreator.Channels
 {
     public static partial class Channels
     {
-
         public static void SwitchColorChannelDestinations(List<MaskInput> imgs, Channel oldChannel, Channel newChannel)
         {
             if (imgs.Count == 0) return;

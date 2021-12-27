@@ -53,7 +53,7 @@ namespace UnityMaskCreator
 
             src.BeginInit();
             src.UriSource = new Uri(path, UriKind.Absolute);
-            src.CacheOption = BitmapCacheOption.OnLoad;
+            src.CacheOption = BitmapCacheOption.None;
             src.EndInit();
 
             img.Source = src;
@@ -139,6 +139,8 @@ namespace UnityMaskCreator
             images.Remove(images[images.FindIndex(image => image.channel == channel)]);
             img.Source = null;
             tb.Text = string.Empty;
+            GC.Collect();
+
             return;
         }
 
@@ -152,7 +154,7 @@ namespace UnityMaskCreator
 
             using (FileStream fs = new FileStream(destinationPath, FileMode.OpenOrCreate))
                 encoder.Save(fs);
-
+            
             return bitmapMask;
         }
 
